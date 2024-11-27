@@ -1,0 +1,94 @@
+Counter for default backtracking: 481
+Counter for recursive backtracking: 481
+Counter for backtracking with LCV: 65
+Counter for backtracking with MRV: 65
+Counter for backtracking with Constraint Propagation: 65
++---------------+-----------------------------------------+-----------------------------------------+-----------------------------------------+
+|  Lesson Time  |                  Monday                 |                 Tuesday                 |                Wednesday                |
++---------------+-----------------------------------------+-----------------------------------------+-----------------------------------------+
+| 09:00 - 10:30 |         Engineering, Mathematics        |         Engineering, Mathematics        |         Engineering, Programming        |
+|               |     Alexander Petrov, lecture, C303     |    Alexander Petrov, Practice 4, C302   |     Ihor Sydorenko, Practice 5, D401    |
+|               |                                         |                                         |                                         |
+|               |       Natural Sciences, Chemistry       |           Engineering, Physics          |   Engineering, Electrical Engineering   |
+|               |    Svitlana Ivanova, Practice 1, C302   |    Marina Kovalenko, Practice 3, B203   |      Emily Davis, Practice 2, C301      |
+|               |                                         |                                         |                                         |
+|               |        Natural Sciences, Biology        |         Engineering, Programming        | Natural Sciences, Environmental Science |
+|               |   Andriy Shevchenko, Practice 2, B203   |     Ihor Sydorenko, Practice 2, D401    |     Michael Brown, Practice 1, B203     |
+|               |                                         |                                         |                                         |
+|               | Natural Sciences, Environmental Science |      Engineering, Computer Science      |          Humanities, Geography          |
+|               |     Michael Brown, Practice 3, C301     |       John Smith, Practice 1, C303      |      Olena Tkachenko, lecture, B201     |
+|               |                                         |                                         |                                         |
+|               |           Humanities, History           | Natural Sciences, Environmental Science |                                         |
+|               |     Victor Bondar, Practice 4, D401     |       Michael Brown, lecture, C301      |                                         |
+|               |                                         |                                         |                                         |
+| 10:45 - 12:15 |         Engineering, Mathematics        |         Engineering, Mathematics        |      Engineering, Computer Science      |
+|               |    Alexander Petrov, Practice 1, C302   |    Alexander Petrov, Practice 5, C302   |        John Smith, lecture, C302        |
+|               |                                         |                                         |                                         |
+|               |           Engineering, Physics          |         Engineering, Programming        |       Natural Sciences, Astronomy       |
+|               |    Marina Kovalenko, Practice 2, B203   |     Ihor Sydorenko, Practice 6, D401    |      Sarah Wilson, Practice 1, B202     |
+|               |                                         |                                         |                                         |
+|               |         Engineering, Programming        |   Engineering, Electrical Engineering   |           Humanities, History           |
+|               |     Ihor Sydorenko, Practice 3, D401    |      Emily Davis, Practice 1, C301      |     Victor Bondar, Practice 2, C303     |
+|               |                                         |                                         |                                         |
+|               |      Engineering, Computer Science      |       Natural Sciences, Chemistry       |          Humanities, Philosophy         |
+|               |       John Smith, Practice 4, C303      |    Svitlana Ivanova, Practice 2, C303   |      David Clark, Practice 3, B203      |
+|               |                                         |                                         |                                         |
+|               |       Natural Sciences, Chemistry       |           Humanities, History           |                                         |
+|               |     Svitlana Ivanova, lecture, C301     |       Victor Bondar, lecture, D402      |                                         |
+|               |                                         |                                         |                                         |
+|               |           Humanities, History           |                                         |                                         |
+|               |     Victor Bondar, Practice 5, D402     |                                         |                                         |
+|               |                                         |                                         |                                         |
+| 13:00 - 14:30 |         Engineering, Mathematics        |           Engineering, Physics          |   Engineering, Electrical Engineering   |
+|               |    Alexander Petrov, Practice 2, C302   |     Marina Kovalenko, lecture, B203     |        Emily Davis, lecture, C301       |
+|               |                                         |                                         |                                         |
+|               |           Engineering, Physics          |       Natural Sciences, Chemistry       |       Natural Sciences, Astronomy       |
+|               |    Marina Kovalenko, Practice 1, B203   |    Svitlana Ivanova, Practice 3, C301   |      Sarah Wilson, Practice 2, B202     |
+|               |                                         |                                         |                                         |
+|               |         Engineering, Programming        |        Natural Sciences, Biology        |           Humanities, History           |
+|               |     Ihor Sydorenko, Practice 4, D401    |   Andriy Shevchenko, Practice 1, B202   |     Victor Bondar, Practice 1, C303     |
+|               |                                         |                                         |                                         |
+|               |      Engineering, Computer Science      |       Natural Sciences, Geography       |          Humanities, Literature         |
+|               |       John Smith, Practice 3, C303      |    Olena Tkachenko, Practice 2, B201    |      Emma Johnson, Practice 3, C302     |
+|               |                                         |                                         |                                         |
+|               |        Natural Sciences, Biology        |          Humanities, Literature         |                                         |
+|               |     Andriy Shevchenko, lecture, B202    |      Emma Johnson, Practice 4, C302     |                                         |
+|               |                                         |                                         |                                         |
+| 14:45 - 16:15 |         Engineering, Mathematics        |         Engineering, Programming        |   Engineering, Electrical Engineering   |
+|               |    Alexander Petrov, Practice 3, C302   |      Ihor Sydorenko, lecture, D401      |      Emily Davis, Practice 3, C301      |
+|               |                                         |                                         |                                         |
+|               |           Engineering, Physics          |       Natural Sciences, Geography       |       Natural Sciences, Astronomy       |
+|               |    Marina Kovalenko, Practice 4, B203   |    Olena Tkachenko, Practice 1, B201    |       Sarah Wilson, lecture, B202       |
+|               |                                         |                                         |                                         |
+|               |         Engineering, Programming        | Natural Sciences, Environmental Science |          Humanities, Geography          |
+|               |     Ihor Sydorenko, Practice 1, D401    |     Michael Brown, Practice 2, B203     |    Olena Tkachenko, Practice 1, B201    |
+|               |                                         |                                         |                                         |
+|               |      Engineering, Computer Science      |           Humanities, History           |           Humanities, Biology           |
+|               |       John Smith, Practice 2, C303      |     Victor Bondar, Practice 3, C303     |   Andriy Shevchenko, Practice 2, B203   |
+|               |                                         |                                         |                                         |
+|               |       Natural Sciences, Geography       |                                         |                                         |
+|               |      Olena Tkachenko, lecture, B201     |                                         |                                         |
+|               |                                         |                                         |                                         |
++---------------+-----------------------------------------+-----------------------------------------+-----------------------------------------+
++---------------+-------------------------------------+--------------------------------+
+|  Lesson Time  |               Thursday              |             Friday             |
++---------------+-------------------------------------+--------------------------------+
+| 09:00 - 10:30 |        Humanities, Geography        |     Humanities, Philosophy     |
+|               |  Olena Tkachenko, Practice 2, B201  | David Clark, Practice 2, B203  |
+|               |                                     |                                |
+|               |         Humanities, Biology         |     Humanities, Literature     |
+|               | Andriy Shevchenko, Practice 1, B202 | Emma Johnson, Practice 1, C301 |
+|               |                                     |                                |
+| 10:45 - 12:15 |         Humanities, Biology         |     Humanities, Literature     |
+|               |   Andriy Shevchenko, lecture, B202  |  Emma Johnson, lecture, C301   |
+|               |                                     |                                |
+| 13:00 - 14:30 |        Humanities, Philosophy       |                                |
+|               |      David Clark, lecture, B203     |                                |
+|               |                                     |                                |
+| 14:45 - 16:15 |        Humanities, Philosophy       |                                |
+|               |    David Clark, Practice 1, B203    |                                |
+|               |                                     |                                |
+|               |        Humanities, Literature       |                                |
+|               |    Emma Johnson, Practice 2, C301   |                                |
+|               |                                     |                                |
++---------------+-------------------------------------+--------------------------------+

@@ -2,101 +2,101 @@ from csp_initializer import *
 
 csp = my_csp
 
+# Глобальні змінні
 counter = 0
 var_domains = {}
-degree_values = {}
 
 # Ініціалізація порожнього присвоєння
 def init_assignment_con(csp):
-    global var_domains
-    global counter
+    global var_domains, counter
     counter = 0
-    assignment = {}
-    for var in csp[VARIABLES]:
-        assignment[var] = None
-        var_domains[var] = csp[DOMAINS].copy()
+    assignment = {var: None for var in csp[VARIABLES]}
+    var_domains = {var: csp[DOMAINS].copy() for var in csp[VARIABLES]}
     return assignment
 
-def getRoom(csp, assignment, var, value):
-    rooms = data.rooms  # data.rooms - це список об'єктів Room
-    rooms.sort(key=lambda room: room.capacity)  # Сортуємо аудиторії за місткістю
+# Знаходження відповідної аудиторії
+def get_room(csp, assignment, var, value):
+    rooms = sorted(data.rooms, key=lambda room: room.capacity)  # Сортуємо за місткістю
+    for room in rooms:
+        if room.capacity >= var.number_of_students:
+            if all(
+                assignment[k] != value or k.room != room
+                for k in csp[VARIABLES] if assignment[k] is not None
+            ):
+                return room
+    return None  # Немає доступної аудиторії
 
-    for r in rooms:
-        if r.capacity >= var.number_of_students:
-            free = True
-            for k in csp[VARIABLES]:
-                if assignment[k] is not None:
-                    if k.room == r and assignment[k] == value:
-                        free = False
-                        break
-            if free:
-                return r
-    return None  # Якщо немає доступної аудиторії
-
-# Основний цикл виконується, поки є невирішені змінні.
-# Невирішена змінна обирається, і для кожного можливого значення виконується "поширення обмежень".
-# Якщо під час спроби присвоєння значення виникає конфлікт, призначення відміняється.
+# Основний алгоритм поширення обмежень
 def constraint_propagation(assignment, csp):
-    global var_domains
     global counter
     while True:
         if is_complete(assignment):
             return assignment
+
         var = select_unassigned_variable(csp[VARIABLES], assignment)
         if var is None:
-            return FAILURE  # Якщо немає непризначених змінних
+            return FAILURE  # Немає непризначених змінних
+
         for value in var_domains[var]:
             if is_in_domain(var, value):
                 assignment[var] = value
-                add_domains(assignment, csp, var)
-                if check_for_zero(assignment, csp):
-                    var.room = getRoom(csp, assignment, var, value)
+                propagate_constraints(assignment, csp, var)
+
+                if check_domains_not_empty():
+                    var.room = get_room(csp, assignment, var, value)
                     counter += 1
-                    if var.room is not None and is_consistent(assignment, csp[CONSTRAINTS]):
+
+                    if var.room and is_consistent(assignment, csp[CONSTRAINTS]):
                         break
-                    else:
-                        assignment[var] = None
-                        var.room = None
-                        undo(assignment, csp)
-                else:
-                    assignment[var] = None
+                # Якщо обмеження порушені або немає доступних аудиторій
+                rollback_assignment(assignment, var)
         else:
-            return FAILURE  # Якщо жодне значення не підходить
+            return FAILURE  # Жодне значення не підходить
     return FAILURE
 
-# Перевіряє, чи залишилося хоча б одне можливе значення для кожної змінної.
-def check_for_zero(assignment, csp):
+# Перевірка, чи залишилися доступні домени
+def check_domains_not_empty():
     global var_domains
-    for var in csp[VARIABLES]:
-        if assignment[var] is None and not any(var_domains[var]):
-            return False
-    return True
+    return all(var_domains[var] for var in var_domains)
 
-# Перевіряє, чи значення знаходиться у домені для певної змінної.
+# Перевірка, чи значення в домені
 def is_in_domain(var, value):
     global var_domains
     return value in var_domains[var]
 
-def add_domains(assignment, csp, var):
+# Поширення обмежень на домени
+def propagate_constraints(assignment, csp, var):
     global var_domains
     assigned_value = assignment[var]
-    for i in csp[VARIABLES]:
-        if assignment[i] is None and i != var:
-            if i.teacher == var.teacher:
-                var_domains[i] = [v for v in var_domains[i] if v != assigned_value]
-            if i.class_type == var.class_type:
-                var_domains[i] = [v for v in var_domains[i] if v != assigned_value]
-            if i.speciality == var.speciality and (i.class_type == "lecture" or var.class_type == "lecture"):
-                var_domains[i] = [v for v in var_domains[i] if v != assigned_value]
 
-def undo(assignment, csp):
+    for neighbor in csp[VARIABLES]:
+        if assignment[neighbor] is None and neighbor != var:
+            if neighbor.teacher == var.teacher:
+                var_domains[neighbor] = [
+                    v for v in var_domains[neighbor] if v != assigned_value
+                ]
+            if neighbor.class_type == var.class_type:
+                var_domains[neighbor] = [
+                    v for v in var_domains[neighbor] if v != assigned_value
+                ]
+            if (neighbor.speciality == var.speciality and
+                (neighbor.class_type == "lecture" or var.class_type == "lecture")):
+                var_domains[neighbor] = [
+                    v for v in var_domains[neighbor] if v != assigned_value
+                ]
+
+# Відкат змін після невдалої спроби
+def rollback_assignment(assignment, var):
     global var_domains
-    # Відновлюємо домени змінних до початкового стану
-    var_domains = {var: csp[DOMAINS].copy() for var in csp[VARIABLES]}
-    for var in csp[VARIABLES]:
-        if assignment[var] is not None:
-            add_domains(assignment, csp, var)
+    assignment[var] = None
+    var.room = None
+    # Повторно ініціалізуємо домени
+    var_domains = {v: csp[DOMAINS].copy() for v in csp[VARIABLES]}
+    for assigned_var in csp[VARIABLES]:
+        if assignment[assigned_var] is not None:
+            propagate_constraints(assignment, csp, assigned_var)
 
+# Лічильник ітерацій
 def get_counter_con():
     global counter
     return counter

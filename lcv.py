@@ -18,7 +18,7 @@ def init_assignment_lcv(csp):
     var_domains = {var: csp[DOMAINS].copy() for var in csp[VARIABLES]}
     return assignment
 
-def getRoom(csp, assignment, var, value):
+def get_room(csp, assignment, var, value):
     """
     Знаходить підходящу аудиторію для заняття.
 
@@ -31,7 +31,10 @@ def getRoom(csp, assignment, var, value):
     rooms = sorted(data.rooms, key=lambda room: room.capacity)  # Сортуємо аудиторії за місткістю
     for room in rooms:
         if room.capacity >= var.number_of_students:  # Перевіряємо місткість
-            if all(assignment[k] != value or k.room != room for k in csp[VARIABLES] if assignment[k] is not None):
+            if all(
+                assignment[k] != value or k.room != room
+                for k in csp[VARIABLES] if assignment[k] is not None
+            ):
                 return room  # Повертаємо першу доступну аудиторію
     return None
 
@@ -58,12 +61,18 @@ def add_domains(assignment, csp, var):
     for other_var in csp[VARIABLES]:
         if assignment[other_var] is None and other_var != var:
             if other_var.teacher == var.teacher:
-                var_domains[other_var] = [v for v in var_domains[other_var] if v != assigned_value]
+                var_domains[other_var] = [
+                    v for v in var_domains[other_var] if v != assigned_value
+                ]
             if other_var.class_type == var.class_type:
-                var_domains[other_var] = [v for v in var_domains[other_var] if v != assigned_value]
+                var_domains[other_var] = [
+                    v for v in var_domains[other_var] if v != assigned_value
+                ]
             if (other_var.speciality == var.speciality and
                 (other_var.class_type == "lecture" or var.class_type == "lecture")):
-                var_domains[other_var] = [v for v in var_domains[other_var] if v != assigned_value]
+                var_domains[other_var] = [
+                    v for v in var_domains[other_var] if v != assigned_value
+                ]
 
 def backtracking_lcv(assignment, csp, heuristic):
     """
@@ -79,9 +88,9 @@ def backtracking_lcv(assignment, csp, heuristic):
         var = heuristic(assignment)
         if var is None:
             return FAILURE  # Немає доступних змінних
-        for value in var_domains.get(var, []):
+        for value in sorted(var_domains.get(var, []), key=lambda v: domain_constraints(csp, assignment, var, v)):
             assignment[var] = value
-            var.room = getRoom(csp, assignment, var, value)
+            var.room = get_room(csp, assignment, var, value)
             counter += 1
             if var.room is not None and is_consistent(assignment, csp[CONSTRAINTS]):
                 add_domains(assignment, csp, var)  # Оновлюємо домени інших змінних
@@ -99,15 +108,25 @@ def lcv_heuristic(assignment):
     :param assignment: Поточний стан призначень.
     :return: Непризначена змінна або None.
     """
-    teacher_counts = {}
-    for var in csp[VARIABLES]:
-        if assignment[var] is None:
-            teacher = var.teacher
-            teacher_counts[teacher] = teacher_counts.get(teacher, 0) + 1
-    # Сортуємо змінні за кількістю залишених занять для викладачів
     unassigned_vars = [var for var in csp[VARIABLES] if assignment[var] is None]
-    unassigned_vars.sort(key=lambda var: teacher_counts[var.teacher])
-    return unassigned_vars[0] if unassigned_vars else None
+    return min(unassigned_vars, key=lambda var: len(var_domains[var]), default=None)
+
+def domain_constraints(csp, assignment, var, value):
+    """
+    Оцінює значення за кількістю обмежень, які воно накладає на інші змінні.
+
+    :param csp: CSP-проблема.
+    :param assignment: Поточний стан призначень.
+    :param var: Змінна, що аналізується.
+    :param value: Значення для змінної.
+    :return: Кількість обмежень.
+    """
+    constraints = 0
+    for other_var in csp[VARIABLES]:
+        if assignment[other_var] is None and other_var != var:
+            if value in var_domains[other_var]:
+                constraints += 1
+    return constraints
 
 def get_counter_lcv():
     """
